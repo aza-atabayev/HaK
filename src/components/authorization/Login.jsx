@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import './authorization.css';
-import { signup } from '../../actions/user';
+import { login } from '../../actions/user';
 import Input from '../input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
+
+    document.title = "Login on HaK"
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const errors = useSelector(state => state.errors)
+    const user = useSelector(state => state.user)
 
     const dispatch = useDispatch()
 
@@ -18,7 +22,7 @@ const Login = () => {
 
         </div>
         <div className="column has-background-light">
-            <div className="columns is-centered is-vcentered  full">
+            <div className="columns is-centered is-vcentered full">
                 <div className="column is-6">
                     <h1 className="title">Log in to HaK</h1>
                     <div className="field ">
@@ -36,18 +40,15 @@ const Login = () => {
                     <div className="field">
                         {errors.title ?<div className="notification is-danger is-light">
                             <strong>{errors.title}</strong>
-                            {errors.details.map((val)=> {
-                                return <p>{val.msg}</p>
-                            })}
                         </div>
                         : <div></div>}
                     </div>
                     <div className="field is-grouped">
                         <div className="control">
-                            <button onClick={() => dispatch(signup(email, password))} className="button is-link">Log in</button>
+                            <button onClick={() => dispatch(login(email, password))} className="button is-link">Log in</button>
                         </div>
                         <div className="control">
-                            <button onClick={() => signup(email, password)} className="button is-link is-light">Sign up</button>
+                            <a href="/registration"className="button is-link is-light">Sign up</a>
                         </div>
                     </div>
                 </div>
