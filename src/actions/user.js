@@ -16,6 +16,19 @@ export function signup(email, password) {
     }
 }
 
+export function verify() {
+    return async dispatch => {
+        try {
+            const email_and_hash = window.location.href.split("?")[1]
+            const response = await axios.get(`http://localhost:5000/api/auth/verification?${email_and_hash}`)
+            localStorage.setItem('token', response.data.token)
+            dispatch(auth())
+        } catch (e) {
+            console.log(e)
+        }   
+    }
+}
+
 export function login(email, password) {
     return async dispatch => {
         try {
@@ -40,7 +53,6 @@ export function auth() {
             dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)
         } catch (e) {
-            dispatch(setError([e.response.data.message]))
             localStorage.removeItem('token')
         }
     }

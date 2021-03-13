@@ -5,6 +5,7 @@ import Login from '../authorization/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from '../../actions/user';
+import Verification from '../authorization/Verification';
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth)
@@ -12,7 +13,7 @@ function App() {
 
   useEffect( () => {
     dispatch(auth())
-  }, [])
+  })
 
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Switch>
           <Route path="/registration" component = {Registration}/>
           <Route path="/login" component = {Login}/>
+          <Route path="/verification" component = {Verification}/>
           <Redirect to="/login"/>
         </Switch>
         :
