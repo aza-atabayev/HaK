@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setError } from '../reducers/errorReducer';
-import { setUser } from '../reducers/userReducer';
+import { setUser, logout } from '../reducers/userReducer';
 
 export function signup(email, password) {
     return async dispatch => {
@@ -36,8 +36,8 @@ export function login(email, password) {
                 email,
                 password
             })
-            dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)
+            dispatch(setUser(response.data.user))
         } catch (e) {
             dispatch(setError([e.response.data.message]))
         }
@@ -50,10 +50,22 @@ export function auth() {
             const response = await axios.get("http://localhost:5000/api/auth/auth", 
                 {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
             )
-            dispatch(setUser(response.data.user))
             localStorage.setItem('token', response.data.token)
+            dispatch(setUser(response.data.user))
         } catch (e) {
             localStorage.removeItem('token')
+
+        }
+    }
+}
+
+export function log_out() {
+    return async dispatch => {
+        try {
+            localStorage.removeItem('token')
+            dispatch(logout())
+        } catch (e) {
+            alert(e.data.message)
         }
     }
 }

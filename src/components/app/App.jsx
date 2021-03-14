@@ -1,11 +1,11 @@
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-
 import Registration from '../authorization/Registration';
 import Login from '../authorization/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from '../../actions/user';
 import Verification from '../authorization/Verification';
+import Feed from '../feed/Feed';
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth)
@@ -27,7 +27,7 @@ function App() {
         </Switch>
         :
         <Switch>
-          <Route exact path="/" component={Registration}/>
+          <Route exact path="/" component={Feed}/>
           <Redirect to="/"/>
         </Switch>
         }
