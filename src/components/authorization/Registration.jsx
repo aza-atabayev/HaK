@@ -22,7 +22,7 @@ const Registration = () => {
         <div className="column has-background-light">
             <div className="columns is-centered is-vcentered full">
                 <div className="column is-6">
-                    <form onKeyPress={(e)=> { if(e.key === 13) {dispatch(signup(email, password))}}}>
+                    <div onKeyPress={(e)=> { if(e.key === 13) {dispatch(signup(email, password))}}}>
                         <h1 className="title">Create your account</h1>
                         <div className="field ">
                             <label className="label">KAIST email</label>
@@ -53,7 +53,7 @@ const Registration = () => {
                                 <a href="/login" className="button is-link is-light">Log in</a>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

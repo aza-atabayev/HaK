@@ -8,7 +8,9 @@ const defaultState = {
 export default function errorReducer(state=defaultState, action) {
     switch (action.type) {
         case SET_ERROR:
-            return {...state, title: action.payload[0], details: action.payload[1]}
+            return {...state, 
+                title: action.payload[0], 
+                details: action.payload[1]}
         default: 
             return state
     }
