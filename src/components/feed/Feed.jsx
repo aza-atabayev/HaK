@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { log_out } from '../../actions/user';
 
 import { getPosts } from '../../actions/posts';
-import Post from './Post';
+import Post from './Post/Post';
 
 const Feed = () => {
     const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const Feed = () => {
     const observer = useRef()
 
     const lastItem = useCallback((element) => {
-        // remove current observer
+        // remove current observer if exists
         if (observer.current) {
             observer.current.disconnect()
         }
@@ -34,10 +34,10 @@ const Feed = () => {
 
     const items = posts.map((post, index) => {
         if (index + 1 === posts.length) {
-            return <Post ref={lastItem} key={post._id} title={post.title} text={post.text} author={post.author} date={post.date}/> 
+            return <Post ref={lastItem} key={post._id} reputation={post.reputation} post={post} title={post.title} text={post.text} author={post.author} date={post.date}/> 
         }
         else {
-            return <Post key={post._id} title={post.title} text={post.text} author={post.author} date={post.date}/> 
+            return <Post key={post._id} title={post.title} reputation={post.reputation} post={post} text={post.text} author={post.author} date={post.date}/> 
         }
     })
 
@@ -45,12 +45,12 @@ const Feed = () => {
         setIsLoading(true)
         dispatch(getPosts(page))
         setIsLoading(false)
-    },[])
+    },[])   
 
     return (
         
         <div className="columns is-centered">
-            <div className="column is-6">
+            <div className="column is-4">
                 {items}
             </div>
 
