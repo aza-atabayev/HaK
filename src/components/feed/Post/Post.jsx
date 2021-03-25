@@ -1,9 +1,58 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { likePost } from '../../../actions/posts';
 
 const Post = React.forwardRef((props, ref) => {
-    function handleLike(e) {    
-        e.stopPropagation()
-        alert(props.post.text + " is liked")
+    const userId = useSelector(state => state.user.id)
+
+    function handleLike() {    
+        var likeIcon = document.getElementById(props.post._id + "1")
+        var reputationDisplay = document.getElementById(props.post._id + "2")
+        var dislikeIcon = document.getElementById(props.post._id + "3")
+
+        if (likeIcon.classList.contains("far")) { // not liked yet
+            likeIcon.classList.add('fa')
+            likeIcon.classList.remove('far')
+            if (dislikeIcon.classList.contains("fa")) { // was disliked
+                dislikeIcon.classList.remove('fa')
+                dislikeIcon.classList.add('far')
+                reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) + 2
+            }
+            else {reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) + 1}
+        }
+        else { // already liked
+            likeIcon.classList.add('far')
+            likeIcon.classList.remove('fa')
+            reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) - 1
+        }       
+
+        // send update to the server
+        dispatch(likePost(props.post, 1))
+    }
+
+    function handleDislike() {
+        var likeIcon = document.getElementById(props.post._id + "1")
+        var reputationDisplay = document.getElementById(props.post._id + "2")
+        var dislikeIcon = document.getElementById(props.post._id + "3")
+
+        if (dislikeIcon.classList.contains("far")) { // not disliked yet
+            dislikeIcon.classList.add('fa')
+            dislikeIcon.classList.remove('far')
+            if (likeIcon.classList.contains("fa")) { // was liked
+                likeIcon.classList.remove('fa')
+                likeIcon.classList.add('far')
+                reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) - 2
+            }
+            else {reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) - 1}
+        }
+        else { // already disliked
+            dislikeIcon.classList.add('far')
+            dislikeIcon.classList.remove('fa')
+            reputationDisplay.innerHTML = parseInt(reputationDisplay.innerHTML, 10) + 1
+        }       
+
+        // send update to the server
+        dispatch(likePost(props.post, 0))
     }
 
     function date() {
@@ -21,6 +70,7 @@ const Post = React.forwardRef((props, ref) => {
         }
     }
 
+    const dispatch = useDispatch()
 
     return (
         <div className="card mb-3 post" ref={ref}>
@@ -34,9 +84,9 @@ const Post = React.forwardRef((props, ref) => {
             </div>
             <footer className="card-footer">
                 <div className="card-footer-item">
-                    <a onClick={(e)=>{handleLike(e)}} className="icon"><i className="far fa-thumbs-up"></i></a>
-                    <span className="mx-5">{props.reputation}</span>
-                    <a className="icon"><i className="far fa-thumbs-down"></i></a>
+                    <a className="icon"><i onClick={()=>{handleLike()}} id={props.post._id+"1"} className={props.liked ? "fa fa-thumbs-up": "far fa-thumbs-up"}></i></a>
+                    <span className="mx-5" id={props.post._id+"2"}>{props.reputation}</span>
+                    <a className="icon"><i onClick={()=>{handleDislike()}} id={props.post._id+"3"} className={props.disliked ? "fa fa-thumbs-down": "far fa-thumbs-down"}></i></a>
                 </div>
                 <a className="card-footer-item icon-text">
                     <span className="icon"><i className="far fa-comments-alt"></i></span>

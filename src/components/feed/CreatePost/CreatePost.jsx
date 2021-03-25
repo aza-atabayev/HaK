@@ -36,7 +36,7 @@ const CreatePost = () => {
                         </div>
                         <div className="field">
                             <div className="control">
-                                <TextArea onKeyPress={(e)=> { if(e.key === "Enter") {dispatch(createPost(title, text))}}} ref={next} value={text} setValue={setText} className="textarea is-small" placeholder="Text (optional)"/>
+                                <TextArea ref={next} value={text} setValue={setText} className="textarea is-small" placeholder="Text (optional)"/>
                             </div>
                         </div>
                         <div className="field">

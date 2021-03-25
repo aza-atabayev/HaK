@@ -18,6 +18,8 @@ const Feed = () => {
 
     const observer = useRef()
 
+    const user = useSelector(state => state.user.currentUser)
+
     const lastItem = useCallback((element) => {
         // remove current observer if exists
         if (observer.current) {
@@ -26,7 +28,7 @@ const Feed = () => {
         // create new observer
         observer.current = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && loadMore) {
-                dispatch(getPosts(page))
+                dispatch(getPosts(page, user))
             }
         }, {threshold: 1})
 
@@ -37,17 +39,17 @@ const Feed = () => {
 
     const items = posts.map((post, index) => {
         if (index + 1 === posts.length) {
-            return <Post ref={lastItem} key={post._id} reputation={post.reputation} post={post} title={post.title} text={post.text} author={post.author} date={post.date}/> 
+            return <Post ref={lastItem} key={post._id} liked={post.liked} disliked={post.disliked} reputation={post.reputation} post={post} title={post.title} text={post.text} author={post.author} date={post.date}/> 
         }
         else {
-            return <Post key={post._id} title={post.title} reputation={post.reputation} post={post} text={post.text} author={post.author} date={post.date}/> 
+            return <Post key={post._id} title={post.title} liked={post.liked} disliked={post.disliked} reputation={post.reputation} post={post} text={post.text} author={post.author} date={post.date}/> 
         }
     })
 
     useEffect(() => {
         dispatch(deletePosts())
         setIsLoading(true)
-        dispatch(getPosts(1))
+        dispatch(getPosts(1, user))
         setIsLoading(false)
     },[])   
 
