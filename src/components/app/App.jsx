@@ -6,12 +6,13 @@ import { useEffect } from 'react';
 import { auth } from '../../actions/user';
 import Verification from '../authorization/Verification';
 import Feed from '../feed/Feed';
+import CreatePost from '../feed/CreatePost/CreatePost';
 
 function App() {
   const isAuth = useSelector(state => state.user.isAuth)
   const dispatch = useDispatch()
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(auth())
   }, [])
 
@@ -28,6 +29,7 @@ function App() {
         :
         <Switch>
           <Route exact path="/" component={Feed}/>
+          <Route path="/post" component = {CreatePost}/>
           <Redirect to="/"/>
         </Switch>
         }

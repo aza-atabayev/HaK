@@ -9,14 +9,15 @@ const Post = React.forwardRef((props, ref) => {
     function date() {
         var date = new Date().getTime() - new Date(props.date).getTime()
         date = date / 1000 / 60 / 60/ 24
-        if (date >= 365) {return Math.floor(date / 365) + ` year${((Math.floor(date / 365) == 1) ? "" : "s")} ago` }
-        else if (date >= 30) {return Math.floor(date / 30) + ` month${((Math.floor(date / 30) == 1) ? "" : "s")} ago` }
+        if (date >= 365) {return Math.floor(date / 365) + ` year${((Math.floor(date / 365) === 1) ? "" : "s")} ago` }
+        else if (date >= 30) {return Math.floor(date / 30) + ` month${((Math.floor(date / 30) === 1) ? "" : "s")} ago` }
         else if (date >= 2) { return Math.floor(date) + " days ago" }
         else if (date >= 1) { return "Yesterday" }
         else { 
             date = date * 24 * 60
-            if (date < 60) { return Math.floor(date) + ` minute${((Math.floor(date) == 1) ? "" : "s")} ago` }
-            else { return Math.floor(date/60) + ` hour${((Math.floor(date/60) == 1) ? "" : "s")} ago`}
+            if (date > 60) { return Math.floor(date/60) + ` hour${((Math.floor(date/60) === 1) ? "" : "s")} ago`}
+            else if (date < 1) {return "Just now"}
+            else { return Math.floor(date) + ` minute${((Math.floor(date) === 1) ? "" : "s")} ago`  }
         }
     }
 

@@ -4,6 +4,9 @@ import { log_out } from '../../actions/user';
 
 import { getPosts } from '../../actions/posts';
 import Post from './Post/Post';
+import CreatePost from './CreatePost/CreatePost';
+import { NavLink } from 'react-router-dom';
+import { deletePosts } from '../../reducers/postReducer';
 
 const Feed = () => {
     const dispatch = useDispatch()
@@ -42,8 +45,9 @@ const Feed = () => {
     })
 
     useEffect(() => {
+        dispatch(deletePosts())
         setIsLoading(true)
-        dispatch(getPosts(page))
+        dispatch(getPosts(1))
         setIsLoading(false)
     },[])   
 
@@ -51,6 +55,7 @@ const Feed = () => {
         
         <div className="columns is-centered">
             <div className="column is-4">
+                <NavLink to="/post">ssssssssssss</NavLink>
                 {items}
             </div>
 

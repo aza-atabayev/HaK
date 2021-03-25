@@ -1,5 +1,6 @@
 const SET_POSTS = "GET_POSTS";
 const STOP_POSTS = "STOP_POSTS";
+const DELETE_POSTS = "DELETE_POSTS";
 
 const defaultState = {
     posts: [],
@@ -17,6 +18,11 @@ export default function postReducer(state = defaultState, action) {
         case STOP_POSTS:
             return {...state,
                     loadMore: false}
+        case DELETE_POSTS:
+            return {...state,
+                    posts: [],
+                    page: 1,
+                    loadMore: true}
         default:
             return state
     }
@@ -24,3 +30,4 @@ export default function postReducer(state = defaultState, action) {
 
 export const setPosts = (posts) => ({type: SET_POSTS, payload: posts})
 export const stopPosts = () => ({type: STOP_POSTS})
+export const deletePosts = () => ({type: DELETE_POSTS})

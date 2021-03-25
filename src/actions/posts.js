@@ -18,3 +18,15 @@ export function getPosts(page) {
         }   
     }
 }
+
+export function createPost (title, text) {
+    return async dispatch => {
+        try {
+            var date = new Date()
+            const response = await axios.post("http://localhost:5000/api/feed", { title, text, date}, {
+                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}} )
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
